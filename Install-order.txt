@@ -1,0 +1,220 @@
+1.Libunistring
+2.Libidn2
+3.Libpsl
+4.Libtasn1
+5.P11-kit
+6.Make-ca
+7.Wget
+8.Python module: packaging
+9.Python module: docutils
+10.ICU
+11.Libxml2
+12.Libarchive
+13.Docbook-xml
+14.Docbook-xsl-nons
+15.Libxslt
+16.Pcre2
+17.Glib(With GObject Introspection)
+18.Graphviz
+19.Vala
+20.Libxfce4util
+21.Xfconf
+22.cURL
+23.Libuv
+24.Nghttp2
+25.CMake
+26.Graphite2
+27.Libpng
+28.Which
+29.Freetype
+30.Harfbuzz
+31.Freetype(rebuild)
+32.Fontconfig
+33.XORG build env
+34.Util-macros
+35.Xorgproto
+36.libXau
+37.Xcb-proto
+38.libXdmcp
+39.Libxcb
+40.Xorg libraries
+41.Dbus
+42.Gsettings-desktop-schemas
+43.At-spi2-core
+44.NASM
+45.Yasm
+46.Libjpeg-turbo
+47.Shared-mime-info
+48.Pixman
+49.Cairo
+50.Fribidi
+51.Pango
+52.Libssh2
+53.LLVM
+54.Sqlite
+55.Rustc
+56.Librsvg
+57.Libtiff
+58.Gdk-pixbuf
+59.Libdrm
+60.Python module: Mako
+
+Glslang-14.3.0 (required for Vulkan support)
+
+
+libva-2.22.0 (to provide VA-API support for some gallium drivers. Note that there is a circular dependency. You must build libva first without mesa's EGL and GLX support, install this package, and rebuild libva)
+
+
+libvdpau-1.5 (to build VDPAU drivers)
+
+
+LLVM-18.1.7 (required for the r300, r600, and radeonsi drivers, and the LLVMpipe software rasterizer which can make the swrast driver much faster)
+
+
+wayland-protocols-1.36 (required for Plasma-6.1.4, GNOME, and recommended for GTK+-3.24.43)
+
+
+libclc-18.1.7 (required for the Intel iris gallium driver)
+
+
+Vulkan-Loader-1.3.294 (required for the Zink gallium driver)
+
+
+ply-3.11 (required for the Intel vulkan driver)
+
+
+Cbindgen-0.27.0 and rust-bindgen-0.70.0 (required for the Nouveau Vulkan driver)
+
+61.Mesa
+62.Libepoxy
+63.GTK+3
+64.Xcb-util
+65.Startup-notification
+66.Libxfce4ui
+67.Exo
+68.Garcon
+69.Libwnck
+70.Xfce4-panel
+71.Hicolor-icon-theme
+72.Libgudev
+73.Libnotify
+74.Thunar
+75.Libgpg-error
+76.Libgcrypt
+77.Libassuan
+78.Libksba
+79.Npth
+80.Lmdb
+81.Cyrus SASL
+82.OpenDLAP
+83.Nettle
+84.GNUTls
+85.Pinentry
+86.GnuPG
+87.Graphene
+88.ISO codes
+89.XkeyboardConfig
+90.Wayland
+91.Wayland-protocols
+92.Libxkbcommon
+93.Python Module: PyCairo
+94.Python Module: PyGObject
+95.Adwaita-icon-theme
+96.Gstreamer
+97.Linux-PAM
+98.Duktape
+99.Polkit
+100.Systemd
+101.Alsa-lib
+102.CDParanoia-III
+103.Libogg
+104.Libvorbis
+105.Gst-plugins-base
+106.Libdvdread
+107.Libdvdnav
+108.Libva
+The VA API driver suitable for the hardware in your system: intel-vaapi-driver-2.4.1 (for Intel GPUs provided with Haswell CPUs or earlier), intel-media-24.2.5 (for Intel GPUs provided with Broadwell CPUs or later), and Mesa-24.1.5 (providing the r600, radeonsi, and nouveau VA API drivers, for the ATI/AMD Radeon HD 2xxx GPUs and later, and supported NVIDIA GPUs; there is a circular dependency, read the Mesa page for information on how to break it)
+109.Soundtouch
+110.Gst-plugins-bad
+111.Libvpx
+112.FLAC
+113.LAME
+114.Glib-networking
+115.Libsoup2
+116.Libsoup3
+117.Mpg123
+118.Opus
+119.Libsndfile
+120.Speex
+121.Pulseaudio
+122.Gst-plugins-good
+123.GTK4
+124.Libsecret
+125.Openssh
+126.Gcr4
+127.Libusb
+128.Libcdio
+129.Libatasmart
+130.JSON-C
+131.Libaio
+132.LVM2
+133.Popt
+134.Cryptsetup
+135.Keyutils
+136.Py: editables
+137.Py: pathspec
+138.PyDep: setuptools_SCM
+139.PyDep: Pluggy
+140.PyDep: Trove-classifiers
+141.PyDep: Hatchling
+142.Py: Pygments
+143.Libbytesize
+144.Libnvme
+145.Libblockdev
+146.UDisks
+147.Gvfs
+148.Thunar-volman
+149.Tumbler
+150.Xfce4-appfinder
+151.UPower
+152.Xfce4-power-manager
+153.PerlMod: XML::Simple
+154.Icon-naming-utils
+155.Gnome-icon-theme
+156.Libcanberra
+157.Libxklavier
+158.Xfce4-settings
+159.Xfdesktop
+160.Xfwm4
+161.Desktop-file-utils
+162.Accountsservice
+163.Polkit-gnome
+164.Xbitmaps
+165.Xorg Apps
+166.GLU
+167.XScreenSaver
+168.Xfce4-session
+169.Dbus-glib
+170.Utfcpp
+171.Taglib
+172.Parole
+173.VTE
+174.Xfce4-terminal
+175.Libburn
+176.Libisofs
+177.Xfburn
+178.Libexif
+179.Ristretto
+180.Xfce4-dev-tools
+181.Xfce4-notifyd
+182.Keybinder
+183.Boost
+184.Libsigc++
+185.Glibmm
+186.Atkmm
+187.Libcairomm1.18
+188.Pangomm
+189.Gtkmm
+190.JSON-Glib
+191.Pavucontrol
+192.Xfce-pulseaudio-plugin
