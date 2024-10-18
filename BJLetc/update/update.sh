@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Variables
-CURRENT_VERSION_FILE="/opt/yourapp/version.txt"  # File that stores the current version
-SERVER_URL="https://your-private-server.com/updates"
-DOWNLOAD_DIR="/tmp"
-INSTALL_DIR="/opt/yourapp"
+# Hardcoded Variables
+CURRENT_VERSION_FILE="/etc/bjlpm-version"  # File that stores the current version
+LATEST_VERSION_FILE_URL="https://www.bjlinux.xyz/mirror/latest_version.txt"  # URL to fetch the latest version
+SERVER_URL="https://www.bjlinux.xyz/mirror/"  # Base URL for downloading updates
+DOWNLOAD_DIR="/tmp/bjldl"  # Directory for downloading and extracting updates
 
-# Function to get current version
+# Function to get the current version from /etc/bjlpm-version
 get_current_version() {
     if [[ -f "$CURRENT_VERSION_FILE" ]]; then
         cat "$CURRENT_VERSION_FILE"
@@ -15,29 +15,35 @@ get_current_version() {
     fi
 }
 
+# Function to fetch the latest version from the server
+get_latest_version() {
+    wget -qO- "$LATEST_VERSION_FILE_URL"
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Unable to fetch the latest version."
+        exit 1
+    fi
+}
+
 # Function to download a specific version
 download_update() {
     local version=$1
-    wget -O "$DOWNLOAD_DIR/update-$version.tar.gz" "$SERVER_URL/$version/update.tar.gz"
+    wget -O "$DOWNLOAD_DIR/update-$version.tar.xz" "$SERVER_URL/update-$version.tar.xz"
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Failed to download update $version."
+        exit 1
+    fi
 }
 
-# Function to apply update (extract and run commands)
+# Function to apply the update (extract and run update.sh)
 apply_update() {
     local version=$1
-    tar -xf "$DOWNLOAD_DIR/update-$version.tar.gz" -C "$DOWNLOAD_DIR/extracted-$version"
+    mkdir -p "$DOWNLOAD_DIR/extracted-$version"
+    tar -xf "$DOWNLOAD_DIR/update-$version.tar.xz" -C "$DOWNLOAD_DIR/extracted-$version"
     
-    # Extract commands from HTML (assumes the tarball includes HTML files with commands)
-    OUTPUT_SCRIPT="$DOWNLOAD_DIR/extracted-$version/commands.sh"
-    > "$OUTPUT_SCRIPT"  # Clear previous contents if any
-
-    for html_file in "$DOWNLOAD_DIR/extracted-$version"/*.html; do
-        grep -oP '(?<=<pre class="userinput"><kbd class="command">)[^<]+' "$html_file" >> "$OUTPUT_SCRIPT"
-    done
-
-    chmod +x "$OUTPUT_SCRIPT"
-    bash "$OUTPUT_SCRIPT"  # Run the extracted commands
+    # Run the update.sh script inside the extracted update folder
+    bash "$DOWNLOAD_DIR/extracted-$version/update.sh"
     
-    # Update the version file
+    # Update the current version file
     echo "$version" > "$CURRENT_VERSION_FILE"
     echo "Updated to version $version"
 }
@@ -49,16 +55,21 @@ version_compare() {
 
 # Main script logic
 CURRENT_VERSION=$(get_current_version)
-LATEST_VERSION="2.5.0"  # You can set this dynamically if needed
+LATEST_VERSION=$(get_latest_version)
+
+if [[ -z "$LATEST_VERSION" ]]; then
+    echo "Error: Unable to fetch the latest version."
+    exit 1
+fi
 
 echo "Current version: $CURRENT_VERSION"
 echo "Latest version: $LATEST_VERSION"
 
 NEXT_VERSION=$CURRENT_VERSION
 
-# Loop to download and apply updates until the latest version
+# Loop to download and apply updates until the latest version is reached
 while version_compare "$NEXT_VERSION" "$LATEST_VERSION"; do
-    # Increment to the next version (e.g., from 2.1.0 to 2.2.0)
+    # Increment to the next version (e.g., from 2.1.0 to 2.1.1)
     IFS='.' read -r -a version_parts <<< "$NEXT_VERSION"
     ((version_parts[2]++))  # Increment patch version
     NEXT_VERSION="${version_parts[0]}.${version_parts[1]}.${version_parts[2]}"
@@ -67,12 +78,7 @@ while version_compare "$NEXT_VERSION" "$LATEST_VERSION"; do
     
     # Download and apply the next update
     download_update "$NEXT_VERSION"
-    if [[ $? -eq 0 ]]; then
-        apply_update "$NEXT_VERSION"
-    else
-        echo "Failed to download update for version $NEXT_VERSION. Exiting."
-        exit 1
-    fi
+    apply_update "$NEXT_VERSION"
 done
 
 echo "All updates applied. System is up to date."
