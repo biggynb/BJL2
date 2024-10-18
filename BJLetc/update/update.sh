@@ -27,7 +27,7 @@ get_latest_version() {
 # Function to download a specific version
 download_update() {
     local version=$1
-    wget -O "$DOWNLOAD_DIR/update-$version.tar.xz" "$SERVER_URL/update-$version.tar.xz"
+    wget -O "$DOWNLOAD_DIR/update-$version.tar" "$SERVER_URL/update-$version.tar"
     if [[ $? -ne 0 ]]; then
         echo "Error: Failed to download update $version."
         exit 1
@@ -38,7 +38,7 @@ download_update() {
 apply_update() {
     local version=$1
     mkdir -p "$DOWNLOAD_DIR/extracted-$version"
-    tar -xf "$DOWNLOAD_DIR/update-$version.tar.xz" -C "$DOWNLOAD_DIR/extracted-$version"
+    tar -xf "$DOWNLOAD_DIR/update-$version.tar" -C "$DOWNLOAD_DIR/extracted-$version"
     
     # Run the update.sh script inside the extracted update folder
     bash "$DOWNLOAD_DIR/extracted-$version/update.sh"
