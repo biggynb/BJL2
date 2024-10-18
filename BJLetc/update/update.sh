@@ -82,3 +82,4 @@ while version_compare "$NEXT_VERSION" "$LATEST_VERSION"; do
 done
 
 echo "All updates applied. System is up to date."
+
